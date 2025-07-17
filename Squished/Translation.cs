@@ -1,4 +1,4 @@
-namespace Sized;
+namespace Squished;
 
 public class Translation
 {
