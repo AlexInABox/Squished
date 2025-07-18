@@ -15,7 +15,7 @@ public class Plugin : Plugin<Config>
         "A Tearbrinning plugin for the Zeitvertreib SCP:SL server that kills a player when another player falls onto them from a great height!";
 
     public override string Author { get; } = "AlexInABox";
-    public override Version Version { get; } = new(1, 0, 0);
+    public override Version Version { get; } = new(1, 0, 1);
     public override Version RequiredApiVersion { get; } = new(LabApiProperties.CompiledVersion);
     public Translation Translation { get; private set; }
 

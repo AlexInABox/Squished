@@ -24,11 +24,9 @@ public static class EventHandlers
 
     private static void OnHurting(PlayerHurtingEventArgs ev)
     {
-        Logger.Debug("Damage happened");
         float fallDamageDealt = FallDamage(ev.DamageHandler);
         if (fallDamageDealt <= 0f)
         {
-            Logger.Debug("Fall damage is 0, ignoring.");
             return;
         }
 
@@ -39,7 +37,7 @@ public static class EventHandlers
             if (Player.TryGet(collider.gameObject, out Player player))
             {
                 if(player.PlayerId == ev.Player.PlayerId || player.IsGodModeEnabled) continue;
-                DamageHandlerBase damageHandler = new CustomReasonDamageHandler("Crushed by " + ev.Player.Nickname + "!", fallDamageDealt, "");
+                DamageHandlerBase damageHandler = new CustomReasonDamageHandler("Zerquetscht von " + ev.Player.Nickname + "!", fallDamageDealt, "");
                 player.Damage(damageHandler);
                 bonkCount++;
             }
