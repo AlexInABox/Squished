@@ -9,7 +9,7 @@ on:
 env:
   REFERENCES_URL: https://dev.zeitvertreib.vip/assets/buildtools/scpsl-references.zip
   EXILED_REFERENCES: ${{ github.workspace }}/References
-  SNAKE_API_DLL_URL: https://s3.sr.ht/builds.sr.ht/artifacts/~furry/1546053/1734f84d467bcf19/SnakeAPI.dll
+  AUDIO_PLAYER_API_URL: https://github.com/Killers0992/AudioPlayerApi/releases/download/1.0.9/dependencies.zip
 
 jobs:
   build:
@@ -29,10 +29,19 @@ jobs:
           # Download and extract EXILED references
           Invoke-WebRequest -Uri $env:REFERENCES_URL -OutFile "$env:GITHUB_WORKSPACE/Dev.zip" -ErrorAction Stop
           Expand-Archive -Path "$env:GITHUB_WORKSPACE/Dev.zip" -DestinationPath $env:EXILED_REFERENCES
-
-          # Download SnakeAPI.dll directly into EXILED_REFERENCES
-          Invoke-WebRequest -Uri $env:SNAKE_API_DLL_URL -OutFile (Join-Path $env:EXILED_REFERENCES "SnakeAPI.dll") -ErrorAction Stop
-
+          
+          # Download and extract Audio Player API
+          Invoke-WebRequest -Uri $env:AUDIO_PLAYER_API_URL -OutFile "$env:GITHUB_WORKSPACE/AudioPlayerApi.zip" -ErrorAction Stop
+          Expand-Archive -Path "$env:GITHUB_WORKSPACE/AudioPlayerApi.zip" -DestinationPath "$env:GITHUB_WORKSPACE/AudioPlayerApi"
+          
+          # Copy DLLs without overwriting
+          Get-ChildItem -Path "$env:GITHUB_WORKSPACE/AudioPlayerApi/dependencies" -Filter *.dll | ForEach-Object {
+            $target = Join-Path -Path $env:EXILED_REFERENCES -ChildPath $_.Name
+            if (-Not (Test-Path $target)) {
+              Copy-Item -Path $_.FullName -Destination $target
+            }
+          }
+          
       - name: 🧱 Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
