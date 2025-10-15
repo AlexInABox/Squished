@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 env:
   REFERENCES_URL: https://exslmod-team.github.io/SL-References/Dev.zip
-  REFERENCES_PATH: ${{ github.workspace }}/References
+  EXILED_REFERENCES: ${{ github.workspace }}/References
 jobs:
   build:
     runs-on: windows-latest
@@ -24,7 +24,7 @@ jobs:
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri ${{ env.REFERENCES_URL }} -OutFile ${{ github.workspace }}/Dev.zip
-          Expand-Archive -Path Dev.zip -DestinationPath ${{ env.REFERENCES_PATH }}
+          Expand-Archive -Path Dev.zip -DestinationPath ${{ env.EXILED_REFERENCES }}
 
       - name: Setup MSBuild.exe
         uses: microsoft/Setup-MSBuild@v2
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         run: |
-          msbuild Sized\Sized.csproj -t:rebuild -property:Configuration=Release -property:ReferencePath="${{ env.REFERENCES_PATH }}"
+          msbuild Sized\Sized.csproj -t:rebuild -property:Configuration=Release -property:ReferencePath="${{ env.EXILED_REFERENCES }}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
