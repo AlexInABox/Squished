@@ -9,7 +9,7 @@ on:
 env:
   REFERENCES_URL: https://dev.zeitvertreib.vip/assets/buildtools/scpsl-references.zip
   EXILED_REFERENCES: ${{ github.workspace }}/References
-  AUDIO_PLAYER_API_URL: https://github.com/Killers0992/AudioPlayerApi/releases/download/1.0.9/dependencies.zip
+  AUDIO_PLAYER_API_URL: https://github.com/Killers0992/AudioPlayerApi/releases/download/1.1.2/dependencies.zip
 
 jobs:
   build:
