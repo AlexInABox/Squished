@@ -11,7 +11,7 @@ public static class EventHandlers
 {
     public static void RegisterEvents()
     {
-        AudioClipStorage.LoadClip(Plugin.Instance.Config.BonkSoundEffectPath, "squished_sound_effect");
+        AudioClipStorage.LoadClip(Plugin.Instance.Config!.BonkSoundEffectPath, "squished_sound_effect");
         PlayerEvents.Hurting += OnHurting;
     }
 
